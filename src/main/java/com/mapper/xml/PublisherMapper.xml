@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PublisherMapper" >
+  <resultMap id="BaseResultMap" type="com.model.Publisher" >
+    <id column="pub_id" property="pubId" jdbcType="INTEGER" />
+    <result column="pub_name" property="pubName" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pub_id, pub_name, city, state, county
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from publisher
+    where pub_id = #{pubId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from publisher
+    where pub_id = #{pubId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.Publisher" >
+    insert into publisher (pub_id, pub_name, city, 
+      state, county)
+    values (#{pubId,jdbcType=INTEGER}, #{pubName,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Publisher" >
+    insert into publisher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pubId != null" >
+        pub_id,
+      </if>
+      <if test="pubName != null" >
+        pub_name,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pubId != null" >
+        #{pubId,jdbcType=INTEGER},
+      </if>
+      <if test="pubName != null" >
+        #{pubName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Publisher" >
+    update publisher
+    <set >
+      <if test="pubName != null" >
+        pub_name = #{pubName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pub_id = #{pubId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Publisher" >
+    update publisher
+    set pub_name = #{pubName,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      county = #{county,jdbcType=VARCHAR}
+    where pub_id = #{pubId,jdbcType=INTEGER}
+  </update>
+  <select id="queryAllPub" resultMap="BaseResultMap" >
+    select 
+    *
+    from publisher    
+  </select>
+</mapper>

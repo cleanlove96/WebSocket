@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.TitlesMapper">
+	<resultMap id="BaseResultMap" type="com.model.Titles">
+		<id column="titles_id" property="titlesId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="pub_id" property="pubId" jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="advance" property="advance" jdbcType="INTEGER" />
+		<result column="yoralty" property="yoralty" jdbcType="INTEGER" />
+		<result column="ytd_sales" property="ytdSales"
+			jdbcType="INTEGER" />
+		<result column="notes" property="notes" jdbcType="VARCHAR" />
+		<result column="pubdate" property="pubdate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="BaseResultMapTitle" type="com.pojo.TitlesPub">
+		<id column="titles_id" property="titlesId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="pub_name" property="pubName" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="advance" property="advance" jdbcType="INTEGER" />
+		<result column="yoralty" property="yoralty" jdbcType="INTEGER" />
+		<result column="ytd_sales" property="ytdSales"
+			jdbcType="INTEGER" />
+		<result column="notes" property="notes" jdbcType="VARCHAR" />
+		<result column="pubdate" property="pubdate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		titles_id, title, type, pub_id, price, advance, yoralty,
+		ytd_sales, notes,
+		pubdate
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from titles
+		where titles_id = #{titlesId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from titles
+		where titles_id =
+		#{titlesId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.model.Titles">
+		insert into titles (titles_id,
+		title, type,
+		pub_id, price, advance,
+		yoralty, ytd_sales, notes,
+		pubdate)
+		values (#{titlesId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
+		#{pubId,jdbcType=INTEGER},
+		#{price,jdbcType=DOUBLE}, #{advance,jdbcType=INTEGER},
+		#{yoralty,jdbcType=INTEGER}, #{ytdSales,jdbcType=INTEGER},
+		#{notes,jdbcType=VARCHAR},
+		#{pubdate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.model.Titles">
+		insert into titles
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="titlesId != null">
+				titles_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="pubId != null">
+				pub_id,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="advance != null">
+				advance,
+			</if>
+			<if test="yoralty != null">
+				yoralty,
+			</if>
+			<if test="ytdSales != null">
+				ytd_sales,
+			</if>
+			<if test="notes != null">
+				notes,
+			</if>
+			<if test="pubdate != null">
+				pubdate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="titlesId != null">
+				#{titlesId,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="pubId != null">
+				#{pubId,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DOUBLE},
+			</if>
+			<if test="advance != null">
+				#{advance,jdbcType=INTEGER},
+			</if>
+			<if test="yoralty != null">
+				#{yoralty,jdbcType=INTEGER},
+			</if>
+			<if test="ytdSales != null">
+				#{ytdSales,jdbcType=INTEGER},
+			</if>
+			<if test="notes != null">
+				#{notes,jdbcType=VARCHAR},
+			</if>
+			<if test="pubdate != null">
+				#{pubdate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.model.Titles">
+		update titles
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="pubId != null">
+				pub_id = #{pubId,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DOUBLE},
+			</if>
+			<if test="advance != null">
+				advance = #{advance,jdbcType=INTEGER},
+			</if>
+			<if test="yoralty != null">
+				yoralty = #{yoralty,jdbcType=INTEGER},
+			</if>
+			<if test="ytdSales != null">
+				ytd_sales = #{ytdSales,jdbcType=INTEGER},
+			</if>
+			<if test="notes != null">
+				notes = #{notes,jdbcType=VARCHAR},
+			</if>
+			<if test="pubdate != null">
+				pubdate = #{pubdate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where titles_id = #{titlesId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.model.Titles">
+		update titles
+		set
+		title = #{title,jdbcType=VARCHAR},
+		type = #{type,jdbcType=VARCHAR},
+		pub_id = #{pubId,jdbcType=INTEGER},
+		price = #{price,jdbcType=DOUBLE},
+		advance = #{advance,jdbcType=INTEGER},
+		yoralty =
+		#{yoralty,jdbcType=INTEGER},
+		ytd_sales = #{ytdSales,jdbcType=INTEGER},
+		notes = #{notes,jdbcType=VARCHAR},
+		pubdate =
+		#{pubdate,jdbcType=TIMESTAMP}
+		where titles_id =
+		#{titlesId,jdbcType=INTEGER}
+	</update>
+	<select id="queryAllTitles" resultMap="BaseResultMapTitle">
+		SELECT
+		publisher.pub_name,
+		titles.titles_id,
+		titles.title,
+		titles.type,
+		titles.price,
+		titles.advance,
+		titles.yoralty,
+		titles.ytd_sales,
+		titles.notes,
+		titles.pubdate
+		FROM
+		publisher
+		INNER JOIN titles ON publisher.pub_id = titles.pub_id
+	</select>
+</mapper>

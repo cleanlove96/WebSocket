@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.JobsMapper" >
+  <resultMap id="BaseResultMap" type="com.model.Jobs" >
+    <id column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="job_desc" property="jobDesc" jdbcType="VARCHAR" />
+    <result column="Max_lvl" property="maxLvl" jdbcType="INTEGER" />
+    <result column="Min_lvl" property="minLvl" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    job_id, job_desc, Max_lvl, Min_lvl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jobs
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jobs
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.Jobs" >
+    insert into jobs (job_id, job_desc, Max_lvl, 
+      Min_lvl)
+    values (#{jobId,jdbcType=INTEGER}, #{jobDesc,jdbcType=VARCHAR}, #{maxLvl,jdbcType=INTEGER}, 
+      #{minLvl,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Jobs" >
+    insert into jobs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="jobDesc != null" >
+        job_desc,
+      </if>
+      <if test="maxLvl != null" >
+        Max_lvl,
+      </if>
+      <if test="minLvl != null" >
+        Min_lvl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="jobDesc != null" >
+        #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLvl != null" >
+        #{maxLvl,jdbcType=INTEGER},
+      </if>
+      <if test="minLvl != null" >
+        #{minLvl,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Jobs" >
+    update jobs
+    <set >
+      <if test="jobDesc != null" >
+        job_desc = #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="maxLvl != null" >
+        Max_lvl = #{maxLvl,jdbcType=INTEGER},
+      </if>
+      <if test="minLvl != null" >
+        Min_lvl = #{minLvl,jdbcType=INTEGER},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Jobs" >
+    update jobs
+    set job_desc = #{jobDesc,jdbcType=VARCHAR},
+      Max_lvl = #{maxLvl,jdbcType=INTEGER},
+      Min_lvl = #{minLvl,jdbcType=INTEGER}
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </update>
+  <select id="queryAllJobs" resultMap="BaseResultMap" >
+    select 
+     *
+    from jobs   
+  </select>
+</mapper>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.EmployeeMapper">
+	<resultMap id="BaseResultMap" type="com.model.Employee">
+		<id column="emp_id" property="empId" jdbcType="INTEGER" />
+		<result column="fname" property="fname" jdbcType="VARCHAR" />
+		<result column="minit" property="minit" jdbcType="VARCHAR" />
+		<result column="lname" property="lname" jdbcType="VARCHAR" />
+		<result column="job_id" property="jobId" jdbcType="INTEGER" />
+		<result column="job_lvl" property="jobLvl" jdbcType="INTEGER" />
+		<result column="pub_id" property="pubId" jdbcType="INTEGER" />
+		<result column="hire_date" property="hireDate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="BaseResultMapinfo"
+		type="com.pojo.EmployeeInfo">
+		<id column="emp_id" property="empId" jdbcType="INTEGER" />
+		<result column="fname" property="fname" jdbcType="VARCHAR" />
+		<result column="minit" property="minit" jdbcType="VARCHAR" />
+		<result column="lname" property="lname" jdbcType="VARCHAR" />
+		<result column="job_desc" property="jobDesc" jdbcType="VARCHAR" />
+		<result column="job_lvl" property="jobLvl" jdbcType="DOUBLE" />
+		<result column="pub_name" property="pubName" jdbcType="VARCHAR" />
+		<result column="hire_date" property="hireDate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		emp_id, fname, minit, lname, job_id, job_lvl, pub_id, hire_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from employee
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from employee
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.model.Employee">
+		insert into employee (emp_id, fname, minit,
+		lname, job_id, job_lvl,
+		pub_id, hire_date)
+		values (#{empId,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR},
+		#{minit,jdbcType=VARCHAR},
+		#{lname,jdbcType=VARCHAR}, #{jobId,jdbcType=INTEGER}, #{jobLvl,jdbcType=INTEGER},
+		#{pubId,jdbcType=INTEGER}, #{hireDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.model.Employee">
+		insert into employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				emp_id,
+			</if>
+			<if test="fname != null">
+				fname,
+			</if>
+			<if test="minit != null">
+				minit,
+			</if>
+			<if test="lname != null">
+				lname,
+			</if>
+			<if test="jobId != null">
+				job_id,
+			</if>
+			<if test="jobLvl != null">
+				job_lvl,
+			</if>
+			<if test="pubId != null">
+				pub_id,
+			</if>
+			<if test="hireDate != null">
+				hire_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				#{empId,jdbcType=INTEGER},
+			</if>
+			<if test="fname != null">
+				#{fname,jdbcType=VARCHAR},
+			</if>
+			<if test="minit != null">
+				#{minit,jdbcType=VARCHAR},
+			</if>
+			<if test="lname != null">
+				#{lname,jdbcType=VARCHAR},
+			</if>
+			<if test="jobId != null">
+				#{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="jobLvl != null">
+				#{jobLvl,jdbcType=INTEGER},
+			</if>
+			<if test="pubId != null">
+				#{pubId,jdbcType=INTEGER},
+			</if>
+			<if test="hireDate != null">
+				#{hireDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.model.Employee">
+		update employee
+		<set>
+			<if test="fname != null">
+				fname = #{fname,jdbcType=VARCHAR},
+			</if>
+			<if test="minit != null">
+				minit = #{minit,jdbcType=VARCHAR},
+			</if>
+			<if test="lname != null">
+				lname = #{lname,jdbcType=VARCHAR},
+			</if>
+			<if test="jobId != null">
+				job_id = #{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="jobLvl != null">
+				job_lvl = #{jobLvl,jdbcType=INTEGER},
+			</if>
+			<if test="pubId != null">
+				pub_id = #{pubId,jdbcType=INTEGER},
+			</if>
+			<if test="hireDate != null">
+				hire_date = #{hireDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.model.Employee">
+		update employee
+		set fname = #{fname,jdbcType=VARCHAR},
+		minit = #{minit,jdbcType=VARCHAR},
+		lname = #{lname,jdbcType=VARCHAR},
+		job_id = #{jobId,jdbcType=INTEGER},
+		job_lvl = #{jobLvl,jdbcType=INTEGER},
+		pub_id = #{pubId,jdbcType=INTEGER},
+		hire_date = #{hireDate,jdbcType=TIMESTAMP}
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</update>
+	<select id="queryAllEmp" resultMap="BaseResultMapinfo">
+		SELECT
+		employee.emp_id,
+		employee.fname,
+		employee.minit,
+		employee.lname,
+		employee.job_lvl,
+		employee.hire_date,
+		jobs.job_desc,
+		publisher.pub_name
+		FROM
+		employee
+		INNER JOIN jobs ON employee.job_id = jobs.job_id
+		INNER JOIN publisher ON employee.pub_id = publisher.pub_id
+	</select>
+</mapper>
